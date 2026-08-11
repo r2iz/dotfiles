@@ -57,20 +57,21 @@ hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "ease_ou
 hl.animation({ leaf = "fade", enabled = true, speed = 4, bezier = "ease_out" })
 
 local function bind(keys, dispatcher, description, flags)
+  hl.unbind(keys)
   flags = flags or {}
   flags.description = description
   hl.bind(keys, dispatcher, flags)
 end
 
 -- Launchers and session controls
-bind(main_mod .. " + Q", hl.dsp.exec_cmd("alacritty -e herdr"), "Herdr terminal")
+bind(main_mod .. " + Q", hl.dsp.exec_cmd("alacritty"), "terminal")
 bind(main_mod .. " + X", hl.dsp.window.close(), "Close window")
 bind(main_mod .. " + L", hl.dsp.exec_cmd("swaylock -f -c 1e1e2e"), "Lock screen")
-bind(main_mod .. " + M", hl.dsp.exec_cmd("wlogout --protocol layer-shell"), "Session menu")
+bind(main_mod .. " + M", hl.dsp.exec_cmd("wlogout"), "Session menu")
 bind(main_mod .. " + SHIFT + M", hl.dsp.exit(), "Exit Hyprland")
-bind(main_mod .. " + SPACE", hl.dsp.exec_cmd("wofi --show drun"), "Application launcher")
+bind(main_mod .. " + Space", hl.dsp.exec_cmd("wofi --show drun"), "Application launcher")
 bind(main_mod .. " + A", hl.dsp.exec_cmd("wofi --show drun"), "Application launcher")
-bind(main_mod .. " + V", hl.dsp.window.float(), "Toggle floating")
+bind(main_mod .. " + V", hl.dsp.window.float({ action = "toggle" }), "Toggle floating")
 bind(main_mod .. " + F", hl.dsp.window.fullscreen(), "Toggle fullscreen")
 bind(main_mod .. " + P", hl.dsp.window.pseudo(), "Toggle pseudo-tile")
 bind(main_mod .. " + J", hl.dsp.layout("togglesplit"), "Toggle split")
@@ -86,9 +87,14 @@ bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"), "Lower 
 bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 10%+"), "Raise brightness", { repeating = true })
 
 -- Focus and move windows.
-for key, direction in pairs({ left = "l", right = "r", up = "u", down = "d" }) do
-  bind(main_mod .. " + " .. key, hl.dsp.focus({ direction = direction }), "Focus " .. key)
-  bind(main_mod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = direction }), "Move window " .. key)
+for _, direction in ipairs({
+  { key = "Left", direction = "l" },
+  { key = "Right", direction = "r" },
+  { key = "Up", direction = "u" },
+  { key = "Down", direction = "d" },
+}) do
+  bind(main_mod .. " + " .. direction.key, hl.dsp.focus({ direction = direction.direction }), "Focus " .. direction.key)
+  bind(main_mod .. " + SHIFT + " .. direction.key, hl.dsp.window.move({ direction = direction.direction }), "Move window " .. direction.key)
 end
 
 -- Workspaces 1-10.
