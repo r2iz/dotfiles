@@ -1,0 +1,20 @@
+color=2e3440
+font=JetBrainsMono Nerd Font
+font-size=24
+indicator-radius=110
+indicator-thickness=8
+ring-color=88c0d0
+inside-color=3b4252cc
+inside-clear-color=81a1c1cc
+inside-ver-color=a3be8ccc
+inside-wrong-color=bf616acc
+line-color=2e3440
+key-hl-color=8fbcbb
+bs-hl-color=bf616a
+separator-color=4c566a
+text-color=eceff4
+clock
+timestr=%H:%M
+datestr=%a, %d %b
+show-failed-attempts
+

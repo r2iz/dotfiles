@@ -1,0 +1,58 @@
+@define-color bg #2e3440;
+@define-color bg2 #3b4252;
+@define-color fg #eceff4;
+@define-color muted #d8dee9;
+@define-color accent #88c0d0;
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: alpha(@bg, 0.92);
+  color: @fg;
+}
+
+#workspaces,
+#window,
+#clock,
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#network,
+#battery,
+#tray {
+  background: @bg2;
+  border-radius: 9px;
+  margin: 4px 0;
+  padding: 0 10px;
+}
+
+#workspaces, #window, #clock, #cpu, #memory, #temperature,
+#pulseaudio, #network, #battery { border-radius: 9px; }
+
+#workspaces button {
+  color: @muted;
+  padding: 0 7px;
+}
+
+#workspaces button.active {
+  color: @bg;
+  background: @accent;
+  border-radius: 6px;
+}
+
+#clock {
+  color: @accent;
+  font-weight: bold;
+}
+
+#cpu, #memory, #temperature { color: @muted; }
+#temperature.critical { color: #bf616a; }
+#battery.warning { color: #ebcb8b; }
+#battery.critical { color: #bf616a; }

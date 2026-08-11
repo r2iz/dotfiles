@@ -1,0 +1,22 @@
+onboarding = false
+
+[theme]
+name = "terminal"
+
+[terminal]
+default_shell = "/usr/bin/fish"
+shell_mode = "login"
+new_cwd = "follow"
+
+[ui]
+tab_bar_position = "bottom"
+sidebar_start_collapsed = false
+pane_borders = true
+pane_gaps = true
+
+[ui.toast]
+delivery = "herdr"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"

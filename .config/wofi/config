@@ -1,0 +1,11 @@
+show=drun
+width=640
+height=420
+location=center
+prompt=Launch
+allow_images=true
+insensitive=true
+matching=fuzzy
+gtk_dark=true
+hide_scroll=true
+

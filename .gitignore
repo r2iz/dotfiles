@@ -1,0 +1,7 @@
+.DS_Store
+*.swp
+
+# Wallpapers stay local; keep the folder in the repo without committing images.
+wallpapers/*
+!wallpapers/.gitkeep
+!wallpapers/README.md
