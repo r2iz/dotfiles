@@ -1,7 +1,30 @@
 .DS_Store
 *.swp
+*.local
+*.secret
+.env
+.env.*
+!.env.example
 
-# Wallpapers stay local; keep the folder in the repo without committing images.
-wallpapers/*
-!wallpapers/.gitkeep
-!wallpapers/README.md
+# Track the public helpers inside the otherwise local-looking .local tree.
+!common/home/.local/
+!common/home/.local/bin/
+!common/home/.local/bin/codex
+!common/home/.local/bin/codex-log-write-guard
+
+# Never commit authentication material from any home tree.
+**/home/.aws/
+**/home/.docker/config.json
+**/home/.kube/
+**/home/.netrc
+**/home/.npmrc
+**/home/.pypirc
+**/home/.config/gh/hosts.yml
+**/home/.config/gcloud/
+**/home/.ssh/
+**/home/.gnupg/
+
+# Wallpapers stay local; keep only the directory documentation.
+linux/wallpapers/*
+!linux/wallpapers/.gitkeep
+!linux/wallpapers/README.md

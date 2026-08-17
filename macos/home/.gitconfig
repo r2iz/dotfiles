@@ -1,0 +1,13 @@
+[user]
+	name = r2iz
+	email = nere531@outlook.com
+	signingkey = 8B4C7A4C982BFA19
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+[include]
+	path = ~/.gitconfig.local

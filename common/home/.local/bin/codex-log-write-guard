@@ -1,0 +1,49 @@
+#!/bin/sh
+set -eu
+
+codex_home=${CODEX_HOME:-"$HOME/.codex"}
+log_db=${CODEX_LOG_DB:-"$codex_home/logs_2.sqlite"}
+trigger_name=block_log_inserts
+action=${1:-enable}
+
+if ! command -v sqlite3 >/dev/null 2>&1; then
+  echo "sqlite3 is required to manage the Codex log write guard." >&2
+  exit 1
+fi
+
+if [ ! -e "$log_db" ]; then
+  if [ "$action" = "status" ]; then
+    echo "Codex log database not found: $log_db"
+    exit 1
+  fi
+  echo "Codex log database not found yet: $log_db" >&2
+  exit 0
+fi
+
+if [ "$(sqlite3 "$log_db" "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='logs';")" != "1" ]; then
+  echo "Refusing to modify a database without the Codex logs table: $log_db" >&2
+  exit 1
+fi
+
+case "$action" in
+  enable)
+    sqlite3 "$log_db" "CREATE TRIGGER IF NOT EXISTS $trigger_name BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;"
+    echo "Codex log writes blocked: $log_db"
+    ;;
+  disable)
+    sqlite3 "$log_db" "DROP TRIGGER IF EXISTS $trigger_name;"
+    echo "Codex log writes restored: $log_db"
+    ;;
+  status)
+    if [ "$(sqlite3 "$log_db" "SELECT COUNT(*) FROM sqlite_master WHERE type='trigger' AND name='$trigger_name';")" = "1" ]; then
+      echo "Codex log write guard is enabled: $log_db"
+    else
+      echo "Codex log write guard is disabled: $log_db"
+      exit 1
+    fi
+    ;;
+  *)
+    echo "Usage: $0 [enable|disable|status]" >&2
+    exit 2
+    ;;
+esac

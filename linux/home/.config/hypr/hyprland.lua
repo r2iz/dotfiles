@@ -29,8 +29,8 @@ hl.config({
   },
   decoration = {
     rounding = 12,
-    active_opacity = 0.97,
-    inactive_opacity = 0.90,
+    active_opacity = 0.90,
+    inactive_opacity = 0.80,
     blur = { enabled = true, size = 4, passes = 2 },
     shadow = { enabled = true, range = 10, render_power = 3 },
   },
@@ -117,6 +117,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
   hl.exec_cmd("fcitx5 -d --replace")
   hl.exec_cmd([[find "$HOME/Pictures/wallpapers" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.jxl' \) -print -quit | grep -q . && hyprpaper]])
+  hl.exec_cmd("hyprpaper")
 end)
 
 -- Keep launchers and utility windows light, rounded, and out of the tiling tree.

@@ -1,0 +1,11 @@
+brew "cmake"
+brew "gh"
+brew "gnupg"
+brew "llvm"
+brew "neovim"
+brew "pinentry-mac"
+brew "ripgrep"
+brew "volta"
+
+cask "codex"
+cask "ghostty"

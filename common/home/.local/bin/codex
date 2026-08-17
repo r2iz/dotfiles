@@ -1,0 +1,32 @@
+#!/bin/sh
+set -u
+
+guard="$HOME/.local/bin/codex-log-write-guard"
+
+if [ -x "$HOME/.codex/packages/standalone/current/bin/codex" ]; then
+  codex_bin="$HOME/.codex/packages/standalone/current/bin/codex"
+elif [ -x /opt/homebrew/bin/codex ]; then
+  codex_bin=/opt/homebrew/bin/codex
+elif [ -x /usr/local/bin/codex ]; then
+  codex_bin=/usr/local/bin/codex
+elif [ -x /usr/bin/codex ]; then
+  codex_bin=/usr/bin/codex
+else
+  echo "Codex executable not found outside ~/.local/bin." >&2
+  exit 127
+fi
+
+if [ -x "$guard" ]; then
+  "$guard" enable >/dev/null 2>&1 || echo "Warning: could not enable the Codex log write guard." >&2
+fi
+
+"$codex_bin" "$@"
+exit_code=$?
+
+# A first Codex run may create the log database. Enable the guard for the next
+# run after the process exits as well.
+if [ -x "$guard" ]; then
+  "$guard" enable >/dev/null 2>&1 || true
+fi
+
+exit "$exit_code"

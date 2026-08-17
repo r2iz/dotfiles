@@ -1,0 +1,5 @@
+# Project-local Claude settings may contain machine-specific configuration.
+**/.claude/settings.local.json
+
+# macOS metadata
+.DS_Store
